@@ -1,0 +1,89 @@
+class Nodo:
+    def __init__(self,data):
+        self.data = data
+        self.esquerda = None
+        self.direita = None
+        self.grau = 0
+        
+
+    def insere(self, data):
+        if (self.data == data):
+            return False
+        elif self.data < data:
+            if self.direita:
+                return self.direita.insere(data)
+            else:
+                self.grau += 1
+                self.direita = Nodo(data)
+                return True
+        else:
+            if self.esquerda:
+                return self.esquerda.insere(data)
+            else:
+                self.grau += 1
+                self.esquerda = Nodo(data)
+                return True
+
+    def emOrdem(self):
+        if self:
+            if self.esquerda:
+                self.esquerda.emOrdem()
+            print(str(self.data), end = ' ')
+            if self.direita:
+                self.direita.emOrdem()
+
+    def grauEmOrdem(self):
+        if self:
+            if self.esquerda:
+                self.esquerda.grauEmOrdem()
+            print(str(self.grau), end = ' ')
+            if self.direita:
+                self.direita.grauEmOrdem()
+
+class Arvore:
+    def __init__(self):
+        self.raiz = None
+
+    def inserir(self, data):
+        if self.raiz:
+            return self.raiz.insere(data)
+        else:
+            self.raiz = Nodo(data)
+            return True
+
+    def nosDaArvore(self):
+        print()
+        if (self.raiz != None):
+            print('Inorder: ')
+            self.raiz.emOrdem()
+
+    def grauNosDaArvore(self):
+        print()
+        if (self.raiz != None):
+            print('Inorder: ')
+            self.raiz.grauEmOrdem()
+    
+    def nosFolha(self,atual):
+        if atual == None:
+            return 0
+        elif (atual.esquerda == None and atual.direita == None):
+            return 1
+        else:
+            return self.nosFolha(atual.esquerda) + self.nosFolha(atual.direita) 
+
+novaArvore = Arvore()
+var = 0
+novaArvore.inserir(10)
+novaArvore.inserir(12)
+novaArvore.inserir(5)
+novaArvore.inserir(4)
+novaArvore.inserir(20)
+novaArvore.inserir(8)
+novaArvore.inserir(7)
+novaArvore.inserir(15)
+novaArvore.inserir(13)
+novaArvore.nosDaArvore()
+novaArvore.grauNosDaArvore()
+print()
+print(novaArvore.nosFolha(novaArvore.raiz))
+print()
